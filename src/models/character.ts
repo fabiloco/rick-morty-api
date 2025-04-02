@@ -1,19 +1,7 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "./database";
 
-interface CharacterAttributes {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  gender: string;
-  origin: string;
-  image: string;
-}
-
-interface CharacterCreationAttributes extends Optional<CharacterAttributes, "id"> {}
-
-class Character extends Model<CharacterAttributes, CharacterCreationAttributes> implements CharacterAttributes {
+export class Character extends Model {
   public id!: number;
   public name!: string;
   public status!: string;
@@ -26,40 +14,47 @@ class Character extends Model<CharacterAttributes, CharacterCreationAttributes> 
 Character.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
     },
     species: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
     },
     origin: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: true
-    }
+      allowNull: false,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
-    sequelize,
+    sequelize: sequelize,
     tableName: "characters",
-    timestamps: false
   }
 );
-
-export { Character };
