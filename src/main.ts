@@ -2,7 +2,6 @@ import "dotenv/config";
 import express from "express";
 import { createHandler } from "graphql-http/lib/use/express";
 import { graphqlSchema } from "./schema";
-import { rootResolver } from "./resolvers/rootResolver";
 import { sequelize } from "./lib/database";
 import { loggerMiddleware } from "./middlewares/logger.middleware";
 

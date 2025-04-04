@@ -32,7 +32,6 @@ export const runCharacterUpdate = async () => {
 
   await Character.destroy({ where: {} });
   const res = await Character.bulkCreate(charactersToInsert);
-  console.log({res})
 };
 
 export const updateCharactersJob = () => {
