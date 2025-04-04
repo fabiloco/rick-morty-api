@@ -13,10 +13,10 @@ const app = express();
 
 sequelize.authenticate()
   .then(() => {
-    console.log("Conexión a la base de datos establecida correctamente.");
+    console.log("[DATABASE] Database connected successfully.");
   })
   .catch((error) => {
-    console.error("No se pudo conectar a la base de datos:", error);
+    console.error("Database connection error:", error);
   });
 
 app.use(cors());
@@ -36,5 +36,5 @@ updateCharactersJob();
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}/graphql`);
+  console.log(`[SERVER] 🚀 Sever running on http://localhost:${PORT}/graphql`);
 });
