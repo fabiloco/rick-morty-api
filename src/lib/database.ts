@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
 import "dotenv/config";
-import { config } from "../config/config";
+import { sequlizeConfig } from "../config/sequilizeConfig";
 
-export const sequelize = new Sequelize(config);
+export const sequelize = new Sequelize(sequlizeConfig);

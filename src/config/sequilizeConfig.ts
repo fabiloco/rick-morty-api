@@ -7,13 +7,15 @@ interface SequelizeConfig {
   host: string;
   dialect: Dialect;
   migrationsPath: string;
+  logging: boolean;
 }
 
-export const config: SequelizeConfig = {
+export const sequlizeConfig: SequelizeConfig = {
   username: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_NAME || 'rick_and_morty_db',
   host: process.env.DB_HOST || 'localhost',
   dialect: 'mysql',
   migrationsPath: './src/migrations',
+  logging: false,
 };
