@@ -1,17 +1,32 @@
 "use strict";
 
+const axios = require("axios");
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert("characters", [
-      { name: "Rick Sanchez", status: "Alive", species: "Human", gender: "Male", origin: "Earth (C-137)", image: "url_to_image_1", createdAt: new Date(), updatedAt: new Date() },
-      { name: "Morty Smith", status: "Alive", species: "Human", gender: "Male", origin: "Earth (C-137)", image: "url_to_image_2", createdAt: new Date(), updatedAt: new Date() },
-      { name: "Summer Smith", status: "Alive", species: "Human", gender: "Female", origin: "Earth (C-137)", image: "url_to_image_3", createdAt: new Date(), updatedAt: new Date() },
-      { name: "Beth Smith", status: "Alive", species: "Human", gender: "Female", origin: "Earth (C-137)", image: "url_to_image_4", createdAt: new Date(), updatedAt: new Date() },
-      { name: "Jerry Smith", status: "Alive", species: "Human", gender: "Male", origin: "Earth (C-137)", image: "url_to_image_5", createdAt: new Date(), updatedAt: new Date() },
-    ]);
+    try {
+      const { data } = await axios.get("https://rickandmortyapi.com/api/character");
+
+      const characters = data.results.map((char) => ({
+        name: char.name,
+        status: char.status,
+        species: char.species,
+        gender: char.gender,
+        origin: char.origin.name, 
+        image: char.image,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }));
+
+      await queryInterface.bulkInsert("characters", characters);
+      console.log("Seeders ejecutados");
+    } catch (error) {
+      console.error("Error al ejecutar seeds", error);
+    }
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete("characters", null, {});
+    console.log("Seeds eliminads");
   },
 };
