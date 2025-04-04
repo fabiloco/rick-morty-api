@@ -8,9 +8,11 @@ import { loggerMiddleware } from "./middlewares/logger.middleware";
 
 import cors from "cors";
 import { updateCharactersJob } from "./jobs/updateCharacters.job";
+import { redisClient } from "./lib/redis";
 
 const app = express();
 
+// Se inicializa la base de datos
 sequelize.authenticate()
   .then(() => {
     console.log("[DATABASE] Database connected successfully.");
@@ -19,15 +21,18 @@ sequelize.authenticate()
     console.error("Database connection error:", error);
   });
 
+// Se inicializa el cliente de Redis
+redisClient.connect();
+
 app.use(cors());
 app.use(express.json());
 app.use(loggerMiddleware)
 
+// Se inicializa el middleware de GraphQL
 app.all(
   "/graphql",
   createHandler({
     schema: graphqlSchema,
-    rootValue: rootResolver,
   })
 );
 

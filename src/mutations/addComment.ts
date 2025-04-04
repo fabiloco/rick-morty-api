@@ -1,14 +1,17 @@
-import { GraphQLInt, GraphQLString } from 'graphql';
-import { Comment } from '../models/comment';
-import { CommentType } from '../schema/types/commentType';
+import { GraphQLInt, GraphQLString } from "graphql";
+import { CommentType } from "../schema/types/commentType";
+import { Inject } from "../lib/container";
+import { CommentService } from "../services/comment.service";
 
-export const addComment: any  = {
+const commentService = Inject(CommentService);
+
+export const addComment = {
   type: CommentType,
   args: {
     characterId: { type: GraphQLInt },
     text: { type: GraphQLString },
   },
-  resolve: async (_, { characterId, text }) => {
-    return await Comment.create({ characterId, text });
+  resolve: async (_: any, { characterId, text }: any) => {
+    return await commentService.addComment(characterId, text);
   },
 };
