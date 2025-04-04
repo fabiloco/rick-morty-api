@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Character } from '../models/character';
 
 export const runCharacterUpdate = async () => {
+  console.log("[CRON JOB] Updating characters...");
+
   const allCharacters: any[] = [];
   let nextPage = 'https://rickandmortyapi.com/api/character';
 
@@ -29,10 +31,17 @@ export const runCharacterUpdate = async () => {
   }));
 
   await Character.destroy({ where: {} });
-  await Character.bulkCreate(charactersToInsert);
+  const res = await Character.bulkCreate(charactersToInsert);
+  console.log({res})
 };
 
 export const updateCharactersJob = () => {
-  const job = new CronJob('0 0 */12 * * *', runCharacterUpdate, null, true, 'UTC');
+  const job = new CronJob(
+    '0 0 */12 * * *', 
+    runCharacterUpdate, 
+    null, 
+    true, 
+    'UTC'
+  );
   job.start();
 };
