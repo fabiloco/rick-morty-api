@@ -1,6 +1,6 @@
 # rick-morty-api
 
-Proyecto de servicio web API REST tomando como referencia la famosa API de Rick y Morty. Tecnologías utilizadas:
+Proyecto de servicio web API tomando como referencia la famosa API de Rick y Morty. Tecnologías utilizadas:
 
 - Express
 - GraphQL
