@@ -1,4 +1,6 @@
-import { GraphQLObjectType, GraphQLString, GraphQLInt } from "graphql";
+import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList } from "graphql";
+import { Comment } from "../../models/comment";
+import { CommentType } from "./commentType";
 
 export const CharacterType = new GraphQLObjectType({
   name: "Character",
@@ -10,5 +12,11 @@ export const CharacterType = new GraphQLObjectType({
     gender: { type: GraphQLString },
     origin: { type: GraphQLString },
     image: { type: GraphQLString },
+      comments: {
+      type: new GraphQLList(CommentType),
+      resolve: async (character) => {
+        return await Comment.findAll({ where: { characterId: character.id } });
+      },
+    },
   }),
 });

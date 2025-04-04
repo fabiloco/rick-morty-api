@@ -1,6 +1,8 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../lib/database";
 
+import { Comment } from './comment';
+
 export class Character extends Model {
   public id!: number;
   public name!: string;
@@ -58,3 +60,6 @@ Character.init(
     tableName: "characters",
   }
 );
+
+Character.hasMany(Comment, { foreignKey: 'characterId', as: 'comments' });
+Comment.belongsTo(Character, { foreignKey: 'characterId' });
